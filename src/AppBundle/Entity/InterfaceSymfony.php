@@ -83,6 +83,8 @@ class InterfaceSymfony
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -96,10 +98,12 @@ class InterfaceSymfony
     /**
      * @param string $url
      *
-     * @param InterfaceSymfony
+     * @return InterfaceSymfony
      */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 }

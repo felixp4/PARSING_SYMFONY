@@ -84,6 +84,8 @@ class ClassSymfony
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -97,10 +99,12 @@ class ClassSymfony
     /**
      * @param string $url
      *
-     * @param ClassSymfony
+     * @return ClassSymfony
      */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 }

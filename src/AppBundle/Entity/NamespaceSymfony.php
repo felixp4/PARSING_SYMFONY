@@ -93,6 +93,8 @@ class NamespaceSymfony
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -106,11 +108,13 @@ class NamespaceSymfony
     /**
      * @param string $url
      *
-     * @param NamespaceSymfony
+     * @return NamespaceSymfony
      */
     public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
