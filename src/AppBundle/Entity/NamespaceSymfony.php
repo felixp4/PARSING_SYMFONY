@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 Namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping As ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * NamespaceSymfony

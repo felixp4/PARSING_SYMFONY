@@ -30,8 +30,7 @@ class ParseSymfonyCommand extends Command
         $crawler = new Crawler($html);
         $nodeLinks = $crawler->filter('div.namespace-container > ul > li > a');
 
-        foreach ($nodeLinks as $item)
-        {
+        foreach ($nodeLinks as $item) {
             $url = 'http://api.symfony.com/3.2/'.$item->getAttribute('href');
 
             var_dump($item->nodeName);
@@ -43,8 +42,7 @@ class ParseSymfonyCommand extends Command
             $nodeClasses = $crawlerClass->filter(
                  'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
 
-            foreach($nodeClasses as $itemClass)
-            {
+            foreach($nodeClasses as $itemClass) {
                 var_dump("Класс");
 
                 var_dump($itemClass->nodeName);
@@ -56,8 +54,7 @@ class ParseSymfonyCommand extends Command
             $nodeInterfaces = $crawlerInterface->filter(
                 'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
 
-            foreach($nodeInterfaces as $itemInterface)
-            {
+            foreach($nodeInterfaces as $itemInterface) {
                 var_dump("Интерфейс");
 
                 var_dump($itemInterface->nodeName);
