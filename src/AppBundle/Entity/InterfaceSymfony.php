@@ -1,6 +1,8 @@
 <?php
 
-namespace AppBundle\Entity;
+declare(strict_types=1);
+
+Namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping As ORM;
 
@@ -42,7 +44,7 @@ class InterfaceSymfony
     /**
      * @return mixed
      */
-    public function getNamespace()
+    public function getNamespace(): NamespaceSymfony
     {
         return $this->namespace;
     }
@@ -52,7 +54,7 @@ class InterfaceSymfony
      *
      * @return InterfaceSymfony
      */
-    public function setNamespace($namespace)
+    public function setNamespace(NamespaceSymfony $namespace): InterfaceSymfony
     {
         $this->namespace = $namespace;
 
@@ -60,27 +62,33 @@ class InterfaceSymfony
     }
 
     /**
+     * Get id
+     *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
+     * Get name
+     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     /**
+     * Set name
+     *
      * @param string $name
      *
      * @return InterfaceSymfony
      */
-    public function setName($name)
+    public function setName(string $name): InterfaceSymfony
     {
         $this->name = $name;
 
@@ -88,19 +96,23 @@ class InterfaceSymfony
     }
 
     /**
+     * Get url
+     *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
+     * Set url
+     *
      * @param string $url
      *
      * @return InterfaceSymfony
      */
-    public function setUrl($url)
+    public function setUrl(string $url): InterfaceSymfony
     {
         $this->url = $url;
 

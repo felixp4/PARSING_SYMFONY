@@ -1,6 +1,8 @@
 <?php
 
-namespace AppBundle\Entity;
+declare(strict_types=1);
+
+Namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping As ORM;
 
@@ -56,7 +58,7 @@ class NamespaceSymfony
     /**
      * @return mixed
      */
-    public function getInterfaces()
+    public function getInterfaces(): ArrayCollection
     {
         return $this->interfaces;
     }
@@ -64,33 +66,39 @@ class NamespaceSymfony
     /**
      * @return mixed
      */
-    public function getClasses()
+    public function getClasses(): ArrayCollection
     {
         return $this->classes;
     }
 
     /**
+     * Get id
+     *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
+     * Get name
+     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     /**
+     * Set name
+     *
      * @param string $name
      *
      * @return NamespaceSymfony
      */
-    public function setName($name)
+    public function setName(string $name): NamespaceSymfony
     {
         $this->name = $name;
 
@@ -98,19 +106,23 @@ class NamespaceSymfony
     }
 
     /**
+     * Get url
+     *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
-        return $this->url;
+        return (string) $this->url;
     }
 
     /**
+     * Set url
+     *
      * @param string $url
      *
      * @return NamespaceSymfony
      */
-    public function setUrl($url)
+    public function setUrl(string $url): NamespaceSymfony
     {
         $this->url = $url;
 
@@ -124,7 +136,7 @@ class NamespaceSymfony
      *
      * @return NamespaceSymfony
      */
-    public function addInterface(\AppBundle\Entity\InterfaceSymfony $interface)
+    public function addInterface(InterfaceSymfony $interface): NamespaceSymfony
     {
         $this->interfaces[] = $interface;
 
@@ -136,7 +148,7 @@ class NamespaceSymfony
      *
      * @param \AppBundle\Entity\InterfaceSymfony $interface
      */
-    public function removeInterface(\AppBundle\Entity\InterfaceSymfony $interface)
+    public function removeInterface(InterfaceSymfony $interface)
     {
         $this->interfaces->removeElement($interface);
     }

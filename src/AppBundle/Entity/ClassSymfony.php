@@ -1,8 +1,9 @@
 <?php
 
-namespace AppBundle\Entity;
+declare(strict_types=1);
 
-// use Dictrine\Common\Collections\ArrayCollection;
+Namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping As ORM;
 
 /**
@@ -41,19 +42,23 @@ class ClassSymfony
     private $namespace;
 
     /**
+     * Get namespace
+     *
      * @return mixed
      */
-    public function getNamespace()
+    public function getNamespace(): NamespaceSymfony
     {
         return $this->namespace;
     }
 
     /**
+     * Set namespace
+     *
      * @param mixed $namespace
      *
      * @return ClassSymfony
      */
-    public function setNamespace($namespace)
+    public function setNamespace(NamespaceSymfony $namespace): ClassSymfony
     {
         $this->namespace = $namespace;
 
@@ -61,27 +66,33 @@ class ClassSymfony
     }
 
     /**
+     * Get id
+     *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
+     * Get name
+     *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     /**
+     * Set name
+     *
      * @param string $name
      *
      * @return ClassSymfony
      */
-    public function setName($name)
+    public function setName(string $name): CLassSymfony
     {
         $this->name = $name;
 
@@ -89,19 +100,23 @@ class ClassSymfony
     }
 
     /**
+     * Get url
+     *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
+     * Set url
+     *
      * @param string $url
      *
      * @return ClassSymfony
      */
-    public function setUrl($url)
+    public function setUrl(string $url): ClassSymfony
     {
         $this->url = $url;
 
