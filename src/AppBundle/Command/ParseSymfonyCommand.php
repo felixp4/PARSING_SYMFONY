@@ -65,8 +65,6 @@ class ParseSymfonyCommand extends ContainerAwareCommand
                 $classSymfony->setUrl($itemClass->getAttribute('href'));
                 $classSymfony->setNamespace($namespaceSymfony);
 
-                $namespaceSymfony->addClass($classSymfony);
-
                 $em->persist($classSymfony);
             }
 
@@ -85,8 +83,6 @@ class ParseSymfonyCommand extends ContainerAwareCommand
                 $interfaceSymfony->setName($itemInterface->textContent);
                 $interfaceSymfony->setUrl($itemInterface->getAttribute('href'));
                 $interfaceSymfony->setNamespace($namespaceSymfony);
-
-                $namespaceSymfony->addInterface($interfaceSymfony);
 
                 $em->persist($interfaceSymfony);
             }
