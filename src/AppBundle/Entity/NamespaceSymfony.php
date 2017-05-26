@@ -5,6 +5,7 @@ declare(strict_types=1);
 Namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * NamespaceSymfony
@@ -151,5 +152,29 @@ class NamespaceSymfony
     public function removeInterface(InterfaceSymfony $interface)
     {
         $this->interfaces->removeElement($interface);
+    }
+
+    /**
+     * Add class
+     *
+     * @param \AppBundle\Entity\ClassSymfony $class
+     *
+     * @return NamespaceSymfony
+     */
+    public function addClass(ClassSymfony $class): NamespaceSymfony
+    {
+        $this->classes[] = $class;
+
+        return $this;
+    }
+
+    /**
+     * Remove class
+     *
+     * @param \AppBundle\Entity\ClassSymfony $class
+     */
+    public function removeClass(ClassSymfony $class)
+    {
+        $this->classes->removeElement($class);
     }
 }

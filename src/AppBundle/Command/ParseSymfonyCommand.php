@@ -6,8 +6,12 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler;
+use AppBundle\Entity\NamespaceSymfony;
+use AppBundle\Entity\ClassSymfony;
+use AppBundle\Entity\InterfaceSymfony;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-class ParseSymfonyCommand extends Command
+class ParseSymfonyCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
@@ -30,12 +34,19 @@ class ParseSymfonyCommand extends Command
         $crawler = new Crawler($html);
         $nodeLinks = $crawler->filter('div.namespace-container > ul > li > a');
 
+        // $em = $this->getDoctrine()->getManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
         foreach ($nodeLinks as $item) {
             $url = 'http://api.symfony.com/3.2/'.$item->getAttribute('href');
 
             var_dump($item->nodeName);
             var_dump($item->textContent);
             var_dump($url);
+
+            $namespaceSymfony  = new NamespaceSymfony();
+            $namespaceSymfony->setName($item->textContent);
+            $namespaceSymfony->setUrl($url);
 
             $html_namespace = file_get_contents($url);
             $crawlerClass= new Crawler($html_namespace);
@@ -48,6 +59,15 @@ class ParseSymfonyCommand extends Command
                 var_dump($itemClass->nodeName);
                 var_dump($itemClass->textContent);
                 var_dump($itemClass->getAttribute('href'));
+
+                $classSymfony  = new ClassSymfony();
+                $classSymfony->setName($itemClass->textContent);
+                $classSymfony->setUrl($itemClass->getAttribute('href'));
+                $classSymfony->setNamespace($namespaceSymfony);
+
+                $namespaceSymfony->addClass($classSymfony);
+
+                $em->persist($classSymfony);
             }
 
             $crawlerInterface = new Crawler($html_namespace);
@@ -60,8 +80,19 @@ class ParseSymfonyCommand extends Command
                 var_dump($itemInterface->nodeName);
                 var_dump($itemInterface->textContent);
                 var_dump($itemInterface->getAttribute('href'));
+
+                $interfaceSymfony  = new InterfaceSymfony();
+                $interfaceSymfony->setName($itemInterface->textContent);
+                $interfaceSymfony->setUrl($itemInterface->getAttribute('href'));
+                $interfaceSymfony->setNamespace($namespaceSymfony);
+
+                $namespaceSymfony->addInterface($interfaceSymfony);
+
+                $em->persist($interfaceSymfony);
             }
 
+            $em->persist($namespaceSymfony);
         }
+        $em->flush();
     }
 }
