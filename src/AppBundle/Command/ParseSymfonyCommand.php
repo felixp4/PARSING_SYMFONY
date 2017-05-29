@@ -29,7 +29,9 @@ class ParseSymfonyCommand extends ContainerAwareCommand
             ''
         ]);
 
-        $html = file_get_contents('http://api.symfony.com/3.2/');
+        $this->getNamespaceRecursion('http://api.symfony.com/3.2/Symfony.html');
+
+        /* $html = file_get_contents('http://api.symfony.com/3.2/');
 
         $crawler = new Crawler($html);
         $nodeLinks = $crawler->filter('div.namespace-container > ul > li > a');
@@ -89,6 +91,78 @@ class ParseSymfonyCommand extends ContainerAwareCommand
 
             $em->persist($namespaceSymfony);
         }
-        $em->flush();
+        $em->flush(); */
+    }
+
+    public function getNamespaceRecursion($url)
+    {
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $html = file_get_contents($url);
+
+        $crawler = new Crawler($html);
+        $nodeNamespaces = $crawler->filter('div.namespace-list > a');
+
+        // var_dump($nodeNamespaces->count()); exit;
+
+        foreach($nodeNamespaces as $itemNamespace) {
+            $url = 'http://api.symfony.com/3.2/'.str_replace('../','', $itemNamespace->getAttribute('href'));
+
+            var_dump($itemNamespace->nodeName);
+            var_dump($itemNamespace->textContent);
+            var_dump($url);
+
+            $namespaceSymfony  = new NamespaceSymfony();
+            $namespaceSymfony->setName($itemNamespace->textContent);
+            $namespaceSymfony->setUrl($url);
+
+            $em->persist($namespaceSymfony);
+
+
+            // parsing Classes
+            $html_namespace = file_get_contents($url);
+            $crawlerClass= new Crawler($html_namespace);
+            $nodeClasses = $crawlerClass->filter(
+                'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
+
+            foreach($nodeClasses as $itemClass) {
+                var_dump("Класс");
+
+                var_dump($itemClass->nodeName);
+                var_dump($itemClass->textContent);
+                var_dump($itemClass->getAttribute('href'));
+
+                $classSymfony  = new ClassSymfony();
+                $classSymfony->setName($itemClass->textContent);
+                $classSymfony->setUrl($itemClass->getAttribute('href'));
+                $classSymfony->setNamespace($namespaceSymfony);
+
+                $em->persist($classSymfony);
+            }
+
+
+            // parsing Interfaces
+            $crawlerInterface = new Crawler($html_namespace);
+            $nodeInterfaces = $crawlerInterface->filter(
+                'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
+
+            foreach($nodeInterfaces as $itemInterface) {
+                var_dump("Интерфейс");
+
+                var_dump($itemInterface->nodeName);
+                var_dump($itemInterface->textContent);
+                var_dump($itemInterface->getAttribute('href'));
+
+                $interfaceSymfony  = new InterfaceSymfony();
+                $interfaceSymfony->setName($itemInterface->textContent);
+                $interfaceSymfony->setUrl($itemInterface->getAttribute('href'));
+                $interfaceSymfony->setNamespace($namespaceSymfony);
+
+                $em->persist($interfaceSymfony);
+            }
+
+            $this->getNamespaceRecursion($url);
+            $em->flush();
+        }
     }
 }
