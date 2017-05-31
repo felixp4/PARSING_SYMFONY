@@ -105,8 +105,8 @@ class ParseSymfonyCommand extends ContainerAwareCommand
 
         // var_dump($nodeNamespaces->count()); exit;
 
-        foreach($nodeNamespaces as $itemNamespace) {
-            $url = 'http://api.symfony.com/3.2/'.str_replace('../','', $itemNamespace->getAttribute('href'));
+        foreach ($nodeNamespaces as $itemNamespace) {
+            $url = 'http://api.symfony.com/3.2/'.str_replace('../', '', $itemNamespace->getAttribute('href'));
 
             var_dump($itemNamespace->nodeName);
             var_dump($itemNamespace->textContent);
@@ -118,14 +118,13 @@ class ParseSymfonyCommand extends ContainerAwareCommand
 
             $em->persist($namespaceSymfony);
 
-
             // parsing Classes
             $html_namespace = file_get_contents($url);
-            $crawlerClass= new Crawler($html_namespace);
+            $crawlerClass = new Crawler($html_namespace);
             $nodeClasses = $crawlerClass->filter(
                 'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > a');
 
-            foreach($nodeClasses as $itemClass) {
+            foreach ($nodeClasses as $itemClass) {
                 var_dump("Класс");
 
                 var_dump($itemClass->nodeName);
@@ -140,13 +139,12 @@ class ParseSymfonyCommand extends ContainerAwareCommand
                 $em->persist($classSymfony);
             }
 
-
             // parsing Interfaces
             $crawlerInterface = new Crawler($html_namespace);
             $nodeInterfaces = $crawlerInterface->filter(
                 'div#page-content > div.container-fluid.underlined > div.row > div.col-md-6 > em > a');
 
-            foreach($nodeInterfaces as $itemInterface) {
+            foreach ($nodeInterfaces as $itemInterface) {
                 var_dump("Интерфейс");
 
                 var_dump($itemInterface->nodeName);
