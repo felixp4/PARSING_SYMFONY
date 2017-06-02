@@ -94,7 +94,7 @@ class ParseSymfonyCommand extends ContainerAwareCommand
         $em->flush(); */
     }
 
-    public function getNamespaceRecursion(string $url, ?NamespaceSymfony $parent=null)
+    public function getNamespaceRecursion(string $url, ?NamespaceSymfony $parent)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
 

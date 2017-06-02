@@ -22,6 +22,13 @@ class NamespaceSymfony
     private $parent;
 
     /**
+     * @var NamespaceSymfony
+     *
+     * @ORM\OneToMany(targetEntity="NamespaceSymfony", mappedBy="parent")
+     */
+    private $children;
+
+    /**
      * @return NamespaceSymfony|null
      */
     public function getParent(): ?NamespaceSymfony
@@ -40,13 +47,6 @@ class NamespaceSymfony
 
         return $parent;
     }
-
-    /**
-     * @var NamespaceSymfony
-     *
-     * @ORM\OneToMany(targetEntity="NamespaceSymfony", mappedBy="parent")
-     */
-    private $children;
 
     /**
      * @return NamespaceSymfony
