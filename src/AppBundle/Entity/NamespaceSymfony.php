@@ -15,6 +15,56 @@ use Doctrine\Common\Collections\ArrayCollection;
 class NamespaceSymfony
 {
     /**
+     * @var NamespaceSymfony
+     *
+     * @ORM\ManyToOne(targetEntity="NamespaceSymfony", inversedBy="children")
+     */
+    private $parent;
+
+    /**
+     * @return NamespaceSymfony|null
+     */
+    public function getParent(): ?NamespaceSymfony
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param NamespaceSymfony|null $parent
+     *
+     * @return NamespaceSymfony
+     */
+    public function setParent(?NamespaceSymfony $parent): ?NamespaceSymfony
+    {
+        $this->parent = $parent;
+
+        return $parent;
+    }
+
+    /**
+     * @var NamespaceSymfony
+     *
+     * @ORM\OneToMany(targetEntity="NamespaceSymfony", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @return NamespaceSymfony
+     */
+    public function getChildren(): NamespaceSymfony
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param NamespaceSymfony $children
+     */
+    public function setChildren(NamespaceSymfony $children)
+    {
+        $this->children = $children;
+    }
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")

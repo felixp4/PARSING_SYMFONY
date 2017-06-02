@@ -29,7 +29,7 @@ class ParseSymfonyCommand extends ContainerAwareCommand
             ''
         ]);
 
-        $this->getNamespaceRecursion('http://api.symfony.com/3.2/Symfony.html');
+        $this->getNamespaceRecursion('http://api.symfony.com/3.2/Symfony.html', null);
 
         /* $html = file_get_contents('http://api.symfony.com/3.2/');
 
@@ -94,7 +94,7 @@ class ParseSymfonyCommand extends ContainerAwareCommand
         $em->flush(); */
     }
 
-    public function getNamespaceRecursion($url)
+    public function getNamespaceRecursion(string $url, ?NamespaceSymfony $parent=null)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
 
@@ -102,8 +102,6 @@ class ParseSymfonyCommand extends ContainerAwareCommand
 
         $crawler = new Crawler($html);
         $nodeNamespaces = $crawler->filter('div.namespace-list > a');
-
-        // var_dump($nodeNamespaces->count()); exit;
 
         foreach ($nodeNamespaces as $itemNamespace) {
             $url = 'http://api.symfony.com/3.2/'.str_replace('../', '', $itemNamespace->getAttribute('href'));
@@ -115,6 +113,7 @@ class ParseSymfonyCommand extends ContainerAwareCommand
             $namespaceSymfony  = new NamespaceSymfony();
             $namespaceSymfony->setName($itemNamespace->textContent);
             $namespaceSymfony->setUrl($url);
+            $namespaceSymfony->setParent($parent);
 
             $em->persist($namespaceSymfony);
 
@@ -159,7 +158,7 @@ class ParseSymfonyCommand extends ContainerAwareCommand
                 $em->persist($interfaceSymfony);
             }
 
-            $this->getNamespaceRecursion($url);
+            $this->getNamespaceRecursion($url, $namespaceSymfony);
             $em->flush();
         }
     }
