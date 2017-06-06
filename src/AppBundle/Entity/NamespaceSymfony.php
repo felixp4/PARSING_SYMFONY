@@ -29,42 +29,6 @@ class NamespaceSymfony
     private $children;
 
     /**
-     * @return NamespaceSymfony|null
-     */
-    public function getParent(): ?NamespaceSymfony
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param NamespaceSymfony|null $parent
-     *
-     * @return NamespaceSymfony
-     */
-    public function setParent(?NamespaceSymfony $parent): ?NamespaceSymfony
-    {
-        $this->parent = $parent;
-
-        return $parent;
-    }
-
-    /**
-     * @return NamespaceSymfony
-     */
-    public function getChildren(): NamespaceSymfony
-    {
-        return $this->children;
-    }
-
-    /**
-     * @param NamespaceSymfony $children
-     */
-    public function setChildren(NamespaceSymfony $children)
-    {
-        $this->children = $children;
-    }
-
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -104,6 +68,43 @@ class NamespaceSymfony
     {
         $this->interfaces = new ArrayCollection();
         $this->classes = new ArrayCollection();
+        $this->children = new ArrayCollection();
+    }
+
+    /**
+     * @return NamespaceSymfony|null
+     */
+    public function getParent(): ?NamespaceSymfony
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param NamespaceSymfony|null $parent
+     *
+     * @return NamespaceSymfony
+     */
+    public function setParent(?NamespaceSymfony $parent): ?NamespaceSymfony
+    {
+        $this->parent = $parent;
+
+        return $parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildren(): ArrayCollection
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param NamespaceSymfony $children
+     */
+    public function setChildren(NamespaceSymfony $children)
+    {
+        $this->children = $children;
     }
 
     /**
@@ -226,5 +227,29 @@ class NamespaceSymfony
     public function removeClass(ClassSymfony $class)
     {
         $this->classes->removeElement($class);
+    }
+
+    /**
+     * Add children
+     *
+     * @param \AppBundle\Entity\NamespaceSymfony $children
+     *
+     * @return NamespaceSymfony
+     */
+    public function addChildren(NamespaceSymfony $children): NamespaceSymfony
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \AppBundle\Entity\NamespaceSymfony $children
+     */
+    public function removeChildren(NamespaceSymfony $children)
+    {
+        $this->children->removeElement($children);
     }
 }

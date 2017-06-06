@@ -29,7 +29,16 @@ class ParseSymfonyCommand extends ContainerAwareCommand
             ''
         ]);
 
-        $this->getNamespaceRecursion('http://api.symfony.com/3.2/Symfony.html', null);
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $rootNamespaceSymfony  = new NamespaceSymfony();
+        $rootNamespaceSymfony->setName('Symfony');
+        $rootNamespaceSymfony->setUrl('http://api.symfony.com/3.2/Symfony.html');
+        $rootNamespaceSymfony->setParent(null);
+
+        $em->persist($rootNamespaceSymfony);
+
+        $this->getNamespaceRecursion('http://api.symfony.com/3.2/Symfony.html', $rootNamespaceSymfony);
 
         /* $html = file_get_contents('http://api.symfony.com/3.2/');
 
