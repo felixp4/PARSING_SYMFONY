@@ -84,15 +84,15 @@ class NamespaceSymfony
      *
      * @return NamespaceSymfony
      */
-    public function setParent(?NamespaceSymfony $parent): ?NamespaceSymfony
+    public function setParent(?NamespaceSymfony $parent): NamespaceSymfony
     {
         $this->parent = $parent;
 
-        return $parent;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getChildren(): ArrayCollection
     {
@@ -101,10 +101,14 @@ class NamespaceSymfony
 
     /**
      * @param NamespaceSymfony $children
+     *
+     * @return NamespaceSymfony
      */
-    public function setChildren(NamespaceSymfony $children)
+    public function setChildren(NamespaceSymfony $children): NamespaceSymfony
     {
         $this->children = $children;
+
+        return $this;
     }
 
     /**
@@ -247,9 +251,13 @@ class NamespaceSymfony
      * Remove children
      *
      * @param \AppBundle\Entity\NamespaceSymfony $children
+     *
+     * @return NamespaceSymfony
      */
-    public function removeChildren(NamespaceSymfony $children)
+    public function removeChildren(NamespaceSymfony $children): NamespaceSymfony
     {
         $this->children->removeElement($children);
+
+        return $this;
     }
 }
