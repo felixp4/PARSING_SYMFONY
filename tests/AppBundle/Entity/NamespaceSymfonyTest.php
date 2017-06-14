@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: felix
- * Date: 12.06.17
- * Time: 10:42
- */
 
 declare (strict_types=1);
 
-namespace Tests\AppBundle\Util;
+namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\NamespaceSymfony;
 use AppBundle\Entity\ClassSymfony;

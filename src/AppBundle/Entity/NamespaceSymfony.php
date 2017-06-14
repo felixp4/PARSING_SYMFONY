@@ -130,7 +130,7 @@ class NamespaceSymfony
     /**
      * Get id
      *
-     * @return int
+     * @return null|int
      */
     public function getId(): ?int
     {
