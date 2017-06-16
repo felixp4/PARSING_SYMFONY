@@ -100,18 +100,6 @@ class NamespaceSymfony
     }
 
     /**
-     * @param NamespaceSymfony $children
-     *
-     * @return NamespaceSymfony
-     */
-    public function setChildren(NamespaceSymfony $children): NamespaceSymfony
-    {
-        $this->children = $children;
-
-        return $this;
-    }
-
-    /**
      * @return mixed
      */
     public function getInterfaces(): ArrayCollection
